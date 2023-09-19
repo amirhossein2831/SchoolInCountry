@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('capital');
+            $table->string('currency_name');
+            $table->string('language');
+            $table->unsignedBigInteger('continent_id');
             $table->timestamps();
         });
     }
