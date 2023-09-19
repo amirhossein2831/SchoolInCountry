@@ -5,83 +5,80 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContinentRequest;
 use App\Http\Requests\UpdateContinentRequest;
+use App\Http\Resources\ContinentResource;
 use App\Models\Continent;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use LaravelIdea\Helper\App\Models\_IH_Continent_C;
+use Throwable;
 
 class ContinentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $continent = Continent::query();
+
+        $search = $request->query('q');
+        $all = $request->query('all');
+        $continent = $search ? $continent->where('name','LIKE',"%$search%"): $continent ;
+        $continent = $all ? $continent->get() : $continent->paginate();
+
+        return ContinentResource::collection($continent);
     }
 
+
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Continent $continent
+     * @return void
      */
-    public function create()
+    public function show(Continent $continent)
     {
-        //
+        return ContinentResource::make($continent);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreContinentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreContinentRequest $request
+     * @return Response
      */
     public function store(StoreContinentRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Continent  $continent
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Continent $continent)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Continent  $continent
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Continent $continent)
-    {
-        //
+        return Continent::create($request->all());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateContinentRequest  $request
-     * @param  \App\Models\Continent  $continent
-     * @return \Illuminate\Http\Response
+     * @param UpdateContinentRequest $request
+     * @param Continent $continent
+     * @return JsonResponse
+     * @throws Throwable
      */
     public function update(UpdateContinentRequest $request, Continent $continent)
     {
-        //
+        return $continent->edit($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Continent  $continent
-     * @return \Illuminate\Http\Response
+     * @param Continent $continent
+     * @return JsonResponse
      */
     public function destroy(Continent $continent)
     {
-        //
+      return $continent->remove();
     }
 }
