@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Continent extends Model
 {
     use HasFactory;
+
+    public $guarded = [];
+
+    public function contries()
+    {
+        $this->hasMany('');
+    }
 }
