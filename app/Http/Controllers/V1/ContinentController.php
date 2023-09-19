@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\V1\ContinentRepository;
 use App\Http\Requests\StoreContinentRequest;
 use App\Http\Requests\UpdateContinentRequest;
 use App\Http\Resources\ContinentResource;
@@ -18,6 +19,8 @@ use Throwable;
 
 class ContinentController extends Controller
 {
+    public function __construct(private ContinentRepository $repository){}
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +28,7 @@ class ContinentController extends Controller
      */
     public function index(Request $request)
     {
-        $continent = Continent::query();
+        $continent = $this->repository->index();
 
         $search = $request->query('q');
         $all = $request->query('all');
@@ -34,7 +37,6 @@ class ContinentController extends Controller
 
         return ContinentResource::collection($continent);
     }
-
 
     /**
      * Display the specified resource.
@@ -55,7 +57,7 @@ class ContinentController extends Controller
      */
     public function store(StoreContinentRequest $request)
     {
-        return Continent::create($request->all());
+        return $this->repository->create($request->all());
     }
 
     /**
@@ -68,7 +70,7 @@ class ContinentController extends Controller
      */
     public function update(UpdateContinentRequest $request, Continent $continent)
     {
-        return $continent->edit($request->all());
+        return $this->repository->update($continent,$request->all());
     }
 
     /**
@@ -79,6 +81,6 @@ class ContinentController extends Controller
      */
     public function destroy(Continent $continent)
     {
-      return $continent->remove();
+      return $this->repository->delete($continent);
     }
 }
