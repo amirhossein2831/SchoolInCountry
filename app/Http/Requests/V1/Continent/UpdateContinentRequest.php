@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1\Continent;
 
 use App\Rules\ContinentName;
 use Illuminate\Foundation\Http\FormRequest;

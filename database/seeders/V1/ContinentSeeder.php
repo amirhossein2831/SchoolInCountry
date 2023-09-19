@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\V1;
 
 use App\Models\Continent;
 use Illuminate\Database\Seeder;
