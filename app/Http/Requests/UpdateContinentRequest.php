@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ContinentName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateContinentRequest extends FormRequest
@@ -11,9 +12,9 @@ class UpdateContinentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,10 @@ class UpdateContinentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name'=>['required', new ContinentName($this->name)]
         ];
     }
 }
