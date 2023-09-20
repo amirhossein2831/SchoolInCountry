@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\V1\CountryRepository;
 use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
 use App\Http\Resources\V1\Country\CountryResource;
 use App\Models\Country;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
+    public function __construct(private CountryRepository $repository){}
+
     /**
      * Display a listing of the resource.
      *
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CountryResource::collection(Country::all());
-    }
+        $country = $this->repository->index();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+        $search = $request->query('q');
+        $all = $request->query('all');
+        $country = $search ? $country->where('name','LIKE',"%$search%"): $country ;
+        $country = $all ? $country->get() : $country->paginate()->appends($request->query());
+
+        return CountryResource::collection($country);
     }
 
     /**
