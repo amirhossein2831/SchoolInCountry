@@ -10,7 +10,14 @@ class Country extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    public $fillable = [
+        'name',
+        'capital',
+        'language',
+        'currency_name',
+        'continent_id'
+    ];
+
     public function continent(): BelongsTo
     {
         return $this->belongsTo(Continent::class);
