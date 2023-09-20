@@ -15,5 +15,17 @@ abstract class Service
 
     public function __construct(private Filter $filter){}
 
-   
+    public function applyFilter(Request $request, Builder $builder)
+    {
+        if (in_array('relation', $this->filters)) {
+            $builder = $this->filter->relation($builder, $request->query('country'),$this->relation);
+        }
+        if (in_array('search', $this->filters)) {
+            $builder = $this->filter->search($builder, $request->query('q'), $this->getSearchColumn());
+        }
+        if (in_array('all', $this->filters)) {
+            $builder = $this->filter->all($builder, $request->query('all'),$request->query());
+        }
+        return $builder;
+    }
 }
