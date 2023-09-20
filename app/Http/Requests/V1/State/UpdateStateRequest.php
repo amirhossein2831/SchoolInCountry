@@ -26,7 +26,7 @@ class UpdateStateRequest extends Request
     {
         if($this->method() === 'PUT')
             return [
-                'name'=>'required|string|unique:states',
+                'name'=>'required|string',
                 'capital'=>'required|string',
                 'governor' => 'required|string',
                 'position' => 'required|in:center,west,east,south,north',
@@ -35,7 +35,7 @@ class UpdateStateRequest extends Request
             ];
         else
             return [
-                'name'=>'sometimes|required|string|unique:states',
+                'name'=>'sometimes|required|string',
                 'capital'=>'sometimes|required|string',
                 'governor' => 'sometimes|required|string',
                 'position' => 'sometimes|required|in:center,west,east,south,north',
