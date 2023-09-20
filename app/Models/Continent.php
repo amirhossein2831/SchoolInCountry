@@ -10,7 +10,7 @@ class Continent extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    public $fillable = ['name'];
 
     public function countries(): HasMany
     {
