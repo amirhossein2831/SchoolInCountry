@@ -9,6 +9,7 @@ use App\Http\Requests\V1\State\UpdateStateRequest;
 use App\Http\Resources\V1\StateResource;
 use App\Http\Service\V1\StateService;
 use App\Models\State;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -87,10 +88,10 @@ class StateController extends Controller
      * Remove the specified resource from storage.
      *
      * @param State $state
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy(State $state)
     {
-        //
+        return $this->repository->delete($state);
     }
 }
