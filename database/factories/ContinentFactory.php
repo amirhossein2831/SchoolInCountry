@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\V1;
+namespace Database\Factories;
 
 use App\Models\Continent;
 use Illuminate\Database\Eloquent\Factories\Factory;

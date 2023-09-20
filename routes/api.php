@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\V1\Continent\ContinentController;
+use App\Http\Controllers\API\V1\ContinentController;
+use App\Http\Controllers\API\V1\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'V1'], function () {
+    Route::apiResource('country', CountryController::class);
     Route::apiResource('continent', ContinentController::class);
 });

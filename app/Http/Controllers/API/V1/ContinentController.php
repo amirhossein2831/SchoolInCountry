@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\V1\Continent;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\ContinentRepository;
 use App\Http\Requests\V1\Continent\StoreContinentRequest;
 use App\Http\Requests\V1\Continent\UpdateContinentRequest;
 use App\Http\Resources\V1\Continent\ContinentResource;
+use App\Http\Service\V1\ContinentService;
 use App\Models\Continent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,11 @@ use Throwable;
 
 class ContinentController extends Controller
 {
-    public function __construct(private ContinentRepository $repository){}
+    public function __construct(
+        private ContinentRepository $repository,
+        private ContinentService    $service
+    )
+    {}
 
     /**
      * Display a listing of the resource.
@@ -27,10 +32,7 @@ class ContinentController extends Controller
     {
         $continent = $this->repository->index();
 
-        $search = $request->query('q');
-        $all = $request->query('all');
-        $continent = $search ? $continent->where('name','LIKE',"%$search%"): $continent ;
-        $continent = $all ? $continent->get() : $continent->paginate();
+        $continent = $this->service->applyFilter($request, $continent);
 
         return ContinentResource::collection($continent);
     }
@@ -38,11 +40,15 @@ class ContinentController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param Continent $continent
      * @return void
      */
-    public function show(Continent $continent)
+    public function show(Request $request, Continent $continent)
     {
+        $country = $request->query('country');
+        $continent = $country ? $continent->loadMissing('countries') : $continent;
+
         return ContinentResource::make($continent);
     }
 
@@ -67,7 +73,7 @@ class ContinentController extends Controller
      */
     public function update(UpdateContinentRequest $request, Continent $continent)
     {
-        return $this->repository->update($continent,$request->all());
+        return $this->repository->update($continent, $request->all());
     }
 
     /**
@@ -78,6 +84,6 @@ class ContinentController extends Controller
      */
     public function destroy(Continent $continent)
     {
-      return $this->repository->delete($continent);
+        return $this->repository->delete($continent);
     }
 }

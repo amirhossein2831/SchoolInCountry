@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\V1\Continent;
 
+use App\Http\Requests\Request;
 use App\Rules\ContinentName;
-use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContinentRequest extends FormRequest
+class StoreContinentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class StoreContinentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['required', new ContinentName($this->name)]
+            'name'=>['required','unique:continents', new ContinentName($this->name)]
         ];
     }
 }

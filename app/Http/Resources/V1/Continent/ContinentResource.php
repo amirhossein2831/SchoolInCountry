@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Continent;
 
+use App\Http\Resources\V1\Country\CountryResource;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,7 +21,7 @@ class ContinentResource extends JsonResource
         return [
             'id'=>$this->id,
             'name' => $this->name,
-//            'countries'=> CountryResource::collection($this->whenLoaded('countries'))
+            'countries'=> CountryResource::collection($this->whenLoaded('countries'))
         ];
     }
 }
