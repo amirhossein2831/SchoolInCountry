@@ -3,7 +3,9 @@
 namespace App\Http\Service;
 
 use App\Http\Filter\V1\Filter;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,7 @@ abstract class Service
 
     public function __construct(private Filter $filter){}
 
-    public function applyFilter(Request $request, Builder $builder)
+    public function applyFilter(Request $request, Builder $builder): Collection|LengthAwarePaginator|Builder|array
     {
         if (in_array('relation', $this->filters)) {
             $builder = $this->filter->relation($builder, $request->query('relation'),$this->relation);

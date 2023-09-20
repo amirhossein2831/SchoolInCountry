@@ -6,13 +6,13 @@ use App\Http\Service\Service;
 
 class ContinentService extends Service
 {
-    public const SEARCH_COLUMN = 'name';
+    public const SEARCH_COLUMN = ['name'];
 
     protected array $filters = ['relation', 'search', 'all'];
 
     protected array $relation = ['countries'];
 
-    protected function getSearchColumn(): string
+    protected function getSearchColumn(): array
     {
         return self::SEARCH_COLUMN;
     }
