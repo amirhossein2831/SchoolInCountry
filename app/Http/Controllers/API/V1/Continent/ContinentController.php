@@ -40,11 +40,15 @@ class ContinentController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param Continent $continent
      * @return void
      */
-    public function show(Continent $continent)
+    public function show(Request $request, Continent $continent)
     {
+        $country = $request->query('country');
+        $continent = $country ? $continent->loadMissing('countries'): $continent;
+
         return ContinentResource::make($continent);
     }
 
