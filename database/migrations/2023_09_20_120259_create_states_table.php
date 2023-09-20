@@ -11,10 +11,16 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('capital');
+            $table->string('governor');
+            $table->string('position');
+            $table->string('code');
+            $table->unsignedBigInteger('country_id');
             $table->timestamps();
         });
     }
@@ -24,7 +30,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('states');
     }
