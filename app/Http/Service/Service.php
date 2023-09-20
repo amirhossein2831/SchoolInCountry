@@ -4,6 +4,7 @@ namespace App\Http\Service;
 
 use App\Http\Filter\V1\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 abstract class Service
@@ -27,5 +28,12 @@ abstract class Service
             $builder = $this->filter->all($builder, $request->query('all'),$request->query());
         }
         return $builder;
+    }
+
+    public function singleRelation(Model $entity,$value, array|string $relation): Model
+    {
+        return $value
+            ? $entity->loadMissing($relation)
+            : $entity;
     }
 }

@@ -46,8 +46,8 @@ class ContinentController extends Controller
      */
     public function show(Request $request, Continent $continent)
     {
-        $country = $request->query('country');
-        $continent = $country ? $continent->loadMissing('countries') : $continent;
+        $continent = $this->service
+            ->singleRelation($continent, $request->query('country'), 'countries');
 
         return ContinentResource::make($continent);
     }
