@@ -2,18 +2,19 @@
 
 namespace App\Http\Requests\V1\State;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
+use App\Rules\isCountryAvailable;
 
-class UpdateStateRequest extends FormRequest
+class UpdateStateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,32 @@ class UpdateStateRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        return [
-            //
-        ];
+        if($this->method() === 'PUT')
+            return [
+                'name'=>'required|string|unique:states',
+                'capital'=>'required|string',
+                'governor' => 'required|string',
+                'position' => 'required|in:center,west,east,south,north',
+                'code' => 'required|numeric',
+                'countryId' => ['required',new isCountryAvailable()]
+            ];
+        else
+            return [
+                'name'=>'sometimes|required|string|unique:states',
+                'capital'=>'sometimes|required|string',
+                'governor' => 'sometimes|required|string',
+                'position' => 'sometimes|required|in:center,west,east,south,north',
+                'code' => 'sometimes|required|numeric',
+                'countryId' => ['sometimes','required',new isCountryAvailable()]
+            ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->countryId) {
+            $this->merge(['currency_name'=>$this->countryId]);
+        }
     }
 }
