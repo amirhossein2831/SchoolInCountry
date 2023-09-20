@@ -3,37 +3,45 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\V1\StateRepository;
 use App\Http\Requests\V1\State\StoreStateRequest;
 use App\Http\Requests\V1\State\UpdateStateRequest;
+use App\Http\Resources\V1\StateResource;
+use App\Http\Service\V1\StateService;
 use App\Models\State;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class StateController extends Controller
 {
+
+    public function __construct(
+        private StateRepository $repository,
+        private StateService $service
+    )
+    {}
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $state = $this->repository->index();
+
+        $state = $this->service->applyFilter($request, $state);
+
+        return StateResource::collection($state);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\V1\State\StoreStateRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreStateRequest $request)
     {
@@ -44,7 +52,7 @@ class StateController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(State $state)
     {
@@ -55,7 +63,7 @@ class StateController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(State $state)
     {
@@ -67,7 +75,7 @@ class StateController extends Controller
      *
      * @param  \App\Http\Requests\V1\State\UpdateStateRequest  $request
      * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UpdateStateRequest $request, State $state)
     {
@@ -78,7 +86,7 @@ class StateController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\State  $state
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(State $state)
     {
