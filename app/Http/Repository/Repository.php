@@ -17,25 +17,25 @@ abstract class Repository
         return $this->getClass()::query();
     }
 
-    public function create($value)
+    public function create($data)
     {
-       return $this->getClass()::create($value);
+       return $this->getClass()::create($data);
     }
 
-    public function update(Model $continent,$value): JsonResponse
+    public function update(Model $continent, $data): JsonResponse
     {
         try {
-            $continent->updateOrFail($value);
+            $continent->updateOrFail($data);
         } catch (Throwable) {
             return response()->json(['error'=>'something went wrong'], 400);
         }
         return response()->json(['success'=>'Updated successfully'], 201);
     }
 
-    public function delete(Model $continent): JsonResponse
+    public function delete(Model $entity): JsonResponse
     {
         try {
-            $continent->deleteOrFail();
+            $entity->deleteOrFail();
         } catch (Throwable) {
             return response()->json(['error'=>'something went wrong'], 400);
         }

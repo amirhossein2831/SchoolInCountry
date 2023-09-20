@@ -8,6 +8,7 @@ use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
 use App\Http\Resources\V1\Country\CountryResource;
 use App\Models\Country;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -55,19 +56,6 @@ class CountryController extends Controller
         return $this->repository->create($request->all());
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Country $country
-     * @return Response
-     */
-    public function edit(Country $country)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -84,10 +72,10 @@ class CountryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Country $country
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy(Country $country)
     {
-        //
+        return $this->repository->delete($country);
     }
 }
