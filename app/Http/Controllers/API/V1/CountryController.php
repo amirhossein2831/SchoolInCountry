@@ -18,7 +18,7 @@ class CountryController extends Controller
 {
     public function __construct(
         private CountryRepository $repository,
-        private CountryService    $service
+        private CountryService $service
     )
     {}
 
@@ -39,11 +39,13 @@ class CountryController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param Country $country
      * @return Response
      */
-    public function show(Country $country)
+    public function show(Request $request,Country $country)
     {
+        $country = $this->service->singleRelation($country, $request->query('relation'), 'states');
         return CountryResource::make($country);
     }
 

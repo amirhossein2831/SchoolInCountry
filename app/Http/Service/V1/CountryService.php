@@ -8,7 +8,10 @@ class CountryService extends Service
 {
     public const SEARCH_COLUMN = "name";
 
-    protected array $filters = ['search', 'all'];
+    protected array $filters = ['relation','search', 'all'];
+
+    protected array $relation = ['states'];
+
 
     protected function getSearchColumn(): string
     {
