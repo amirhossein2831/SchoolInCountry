@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class StateController extends Controller
 {
@@ -71,10 +72,6 @@ class StateController extends Controller
      */
     public function update(UpdateStateRequest $request, State $state)
     {
-        $statesName = State::select('name')->where('id', '!=', $state->id)->get()->toArray();
-        if (in_array($state->name, $statesName)) {
-            return response()->json(['error', 'the name is already taken'], 400);
-        }
         return $this->repository->update($state, $request->all());
     }
 

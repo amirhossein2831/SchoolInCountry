@@ -30,11 +30,11 @@ class ContinentController extends Controller
      */
     public function index(Request $request)
     {
-        $continent = $this->repository->index();
+        $continent = $this->repository->getQuery();
 
         $continent = $this->service->applyFilter($request, $continent);
 
-        return ContinentResource::collection($continent);
+        return $this->repository->getAll($continent);
     }
 
     /**
@@ -49,7 +49,7 @@ class ContinentController extends Controller
         $continent = $this->service
             ->singleRelation($continent, $request->query('relation'), 'countries');
 
-        return ContinentResource::make($continent);
+        return $this->repository->getEntity($continent);
     }
 
     /**

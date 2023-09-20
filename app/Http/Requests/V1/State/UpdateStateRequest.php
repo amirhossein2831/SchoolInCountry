@@ -4,6 +4,7 @@ namespace App\Http\Requests\V1\State;
 
 use App\Http\Requests\Request;
 use App\Rules\isCountryAvailable;
+use Illuminate\Validation\Rule;
 
 class UpdateStateRequest extends Request
 {
@@ -26,7 +27,7 @@ class UpdateStateRequest extends Request
     {
         if($this->method() === 'PUT')
             return [
-                'name'=>'required|string',
+                'name'=>['required','string',Rule::unique('states')->ignore($this->route('state'))],
                 'capital'=>'required|string',
                 'governor' => 'required|string',
                 'position' => 'required|in:center,west,east,south,north',
@@ -35,7 +36,7 @@ class UpdateStateRequest extends Request
             ];
         else
             return [
-                'name'=>'sometimes|required|string',
+                'name'=>['sometimes','required','string',Rule::unique('states')->ignore($this->route('state'))],
                 'capital'=>'sometimes|required|string',
                 'governor' => 'sometimes|required|string',
                 'position' => 'sometimes|required|in:center,west,east,south,north',
