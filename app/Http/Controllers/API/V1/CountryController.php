@@ -69,6 +69,10 @@ class CountryController extends Controller
      */
     public function update(UpdateCountryRequest $request, Country $country)
     {
+        $countryName = Country::select('name')->where('id', '!=', $country->id)->get()->toArray();
+        if (in_array($country->name, $countryName)) {
+            return response()->json(['error', 'the name is already taken'], 400);
+        }
         return $this->repository->update($country, $request->all());
     }
 

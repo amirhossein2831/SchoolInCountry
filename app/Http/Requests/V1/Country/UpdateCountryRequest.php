@@ -25,7 +25,7 @@ class UpdateCountryRequest extends Request
     {
         if ($this->method() === "PUT") {
             return [
-                'name'=>'required|string|unique:countries',
+                'name'=>'required|string',
                 'capital'=>'required|string',
                 'language'=>'required|string',
                 'currencyName'=>'required|string',
@@ -33,7 +33,7 @@ class UpdateCountryRequest extends Request
             ];
         }else
             return [
-                'name'=>'sometimes|required|string|unique:countries',
+                'name'=>'sometimes|required|string',
                 'capital'=>'sometimes|required|string',
                 'language'=>'sometimes|required|string',
                 'currencyName'=>'sometimes|required|string',
