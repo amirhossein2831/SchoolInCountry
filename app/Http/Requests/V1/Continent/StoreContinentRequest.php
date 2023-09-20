@@ -25,7 +25,7 @@ class StoreContinentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['required', new ContinentName($this->name)]
+            'name'=>['required','unique:continents', new ContinentName($this->name)]
         ];
     }
 }

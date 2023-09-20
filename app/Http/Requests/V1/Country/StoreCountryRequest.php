@@ -24,7 +24,7 @@ class StoreCountryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string',
+            'name'=>'required|string|unique:countries',
             'capital'=>'required|string',
             'language'=>'required|string',
             'currencyName'=>'required|string',
