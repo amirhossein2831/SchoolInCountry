@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Country extends Model
 {
@@ -23,8 +24,17 @@ class Country extends Model
         return $this->belongsTo(Continent::class);
     }
 
+    public function states(): HasMany
+    {
+        return $this->hasMany(State::class);
+    }
+
     protected static function boot(): void
     {
         parent::boot();
+
+        static::deleting(function ($country) {
+            $country->states()->delete();
+        });
     }
 }

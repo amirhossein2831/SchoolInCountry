@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\CountryRepository;
 use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
-use App\Http\Resources\V1\Country\CountryResource;
+use App\Http\Resources\V1\CountryResource;
 use App\Http\Service\V1\CountryService;
 use App\Models\Country;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +18,7 @@ class CountryController extends Controller
 {
     public function __construct(
         private CountryRepository $repository,
-        private CountryService    $service
+        private CountryService $service
     )
     {}
 
@@ -29,22 +29,26 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $country = $this->repository->index();
+        $country = $this->repository->getQuery();
 
         $country = $this->service->applyFilter($request, $country);
 
-        return CountryResource::collection($country);
+        return $this->repository->getAll($country);
     }
 
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param Country $country
      * @return Response
      */
-    public function show(Country $country)
+    public function show(Request $request,Country $country)
     {
-        return CountryResource::make($country);
+        $country = $this->service
+            ->singleRelation($country, $request->query('relation'), 'states');
+
+        return $this->repository->getEntity($country);
     }
 
     /**

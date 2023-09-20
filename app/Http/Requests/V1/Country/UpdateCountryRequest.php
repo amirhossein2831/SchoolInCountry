@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\Country;
 
 use App\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
 class UpdateCountryRequest extends Request
 {
@@ -25,7 +26,7 @@ class UpdateCountryRequest extends Request
     {
         if ($this->method() === "PUT") {
             return [
-                'name'=>'required|string|unique:countries',
+                'name'=>['required','string',Rule::unique('countries')->ignore($this->route('country'))],
                 'capital'=>'required|string',
                 'language'=>'required|string',
                 'currencyName'=>'required|string',
@@ -33,7 +34,7 @@ class UpdateCountryRequest extends Request
             ];
         }else
             return [
-                'name'=>'sometimes|required|string|unique:countries',
+                'name'=>['sometimes','required','string',Rule::unique('countries')->ignore($this->route('country'))],
                 'capital'=>'sometimes|required|string',
                 'language'=>'sometimes|required|string',
                 'currencyName'=>'sometimes|required|string',

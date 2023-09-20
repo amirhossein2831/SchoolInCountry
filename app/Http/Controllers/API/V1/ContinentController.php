@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\ContinentRepository;
 use App\Http\Requests\V1\Continent\StoreContinentRequest;
 use App\Http\Requests\V1\Continent\UpdateContinentRequest;
-use App\Http\Resources\V1\Continent\ContinentResource;
+use App\Http\Resources\V1\ContinentResource;
 use App\Http\Service\V1\ContinentService;
 use App\Models\Continent;
 use Illuminate\Http\JsonResponse;
@@ -30,11 +30,11 @@ class ContinentController extends Controller
      */
     public function index(Request $request)
     {
-        $continent = $this->repository->index();
+        $continent = $this->repository->getQuery();
 
         $continent = $this->service->applyFilter($request, $continent);
 
-        return ContinentResource::collection($continent);
+        return $this->repository->getAll($continent);
     }
 
     /**
@@ -47,9 +47,9 @@ class ContinentController extends Controller
     public function show(Request $request, Continent $continent)
     {
         $continent = $this->service
-            ->singleRelation($continent, $request->query('country'), 'countries');
+            ->singleRelation($continent, $request->query('relation'), 'countries');
 
-        return ContinentResource::make($continent);
+        return $this->repository->getEntity($continent);
     }
 
     /**

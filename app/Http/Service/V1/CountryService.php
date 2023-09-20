@@ -6,11 +6,14 @@ use App\Http\Service\Service;
 
 class CountryService extends Service
 {
-    public const SEARCH_COLUMN = "name";
+    public const SEARCH_COLUMN = ['name'];
 
-    protected array $filters = ['search', 'all'];
+    protected array $filters = ['relation','search', 'all'];
 
-    protected function getSearchColumn(): string
+    protected array $relation = ['states'];
+
+
+    protected function getSearchColumn(): array
     {
         return self::SEARCH_COLUMN;
     }

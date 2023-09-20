@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\V1\Country;
+namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,6 +21,7 @@ class CountryResource extends JsonResource
             'capital'=>$this->capital,
             'language' => $this->language,
             'currencyName'=>$this->currency_name,
+            'states'=>  StateResource::collection($this->whenLoaded('states'))
         ];
     }
 }
