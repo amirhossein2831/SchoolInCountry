@@ -2,7 +2,6 @@
 
 namespace App\Http\Repository;
 
-use App\Models\Continent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;

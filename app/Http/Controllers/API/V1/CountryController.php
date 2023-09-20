@@ -7,6 +7,7 @@ use App\Http\Repository\V1\CountryRepository;
 use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
 use App\Http\Resources\V1\Country\CountryResource;
+use App\Http\Service\V1\CountryService;
 use App\Models\Country;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,11 @@ use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
-    public function __construct(private CountryRepository $repository){}
+    public function __construct(
+        private CountryRepository $repository,
+        private CountryService    $service
+    )
+    {}
 
     /**
      * Display a listing of the resource.
@@ -26,10 +31,7 @@ class CountryController extends Controller
     {
         $country = $this->repository->index();
 
-        $search = $request->query('q');
-        $all = $request->query('all');
-        $country = $search ? $country->where('name','LIKE',"%$search%"): $country ;
-        $country = $all ? $country->get() : $country->paginate()->appends($request->query());
+        $country = $this->service->applyFilter($request, $country);
 
         return CountryResource::collection($country);
     }

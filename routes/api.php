@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\Continent\ContinentController;
+use App\Http\Controllers\API\V1\ContinentController;
 use App\Http\Controllers\API\V1\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
