@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Continent extends Model
 {
@@ -11,8 +12,17 @@ class Continent extends Model
 
     public $guarded = [];
 
-    public function contries()
+    public function countries(): HasMany
     {
-        $this->hasMany('');
+       return $this->hasMany(Country::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($continent) {
+            $continent->countries()->delete();
+        });
     }
 }
