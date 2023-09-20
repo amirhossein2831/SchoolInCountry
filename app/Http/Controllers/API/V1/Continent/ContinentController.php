@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Continent;
+namespace App\Http\Controllers\API\V1\Continent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\ContinentRepository;
@@ -29,8 +29,10 @@ class ContinentController extends Controller
 
         $search = $request->query('q');
         $all = $request->query('all');
+        $country = $request->query('country');
+        $continent = $country ? $continent->with('countries'): $continent;
         $continent = $search ? $continent->where('name','LIKE',"%$search%"): $continent ;
-        $continent = $all ? $continent->get() : $continent->paginate();
+        $continent = $all ? $continent->get() : $continent->paginate()->appends($request->query());
 
         return ContinentResource::collection($continent);
     }

@@ -5,24 +5,27 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
+use App\Http\Resources\V1\Country\CountryResource;
 use App\Models\Country;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        //
+        return CountryResource::collection(Country::all());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -33,7 +36,7 @@ class CountryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\V1\Country\StoreCountryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreCountryRequest $request)
     {
@@ -44,7 +47,7 @@ class CountryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Country  $country
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Country $country)
     {
@@ -55,7 +58,7 @@ class CountryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Country  $country
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Country $country)
     {
@@ -67,7 +70,7 @@ class CountryController extends Controller
      *
      * @param  \App\Http\Requests\V1\Country\UpdateCountryRequest  $request
      * @param  \App\Models\Country  $country
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UpdateCountryRequest $request, Country $country)
     {
@@ -78,7 +81,7 @@ class CountryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Country  $country
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Country $country)
     {
