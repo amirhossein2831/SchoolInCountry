@@ -11,9 +11,9 @@ class StoreCountryRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,24 @@ class StoreCountryRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name'=>'required|string',
+            'capital'=>'required|string',
+            'language'=>'required|string',
+            'currencyName'=>'required|string',
+            'continentId'=>'required|numeric'
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge(
+            [
+                'currency_name'=>$this->currencyName,
+                'continent_id' => $this->continentId
+            ]
+        );
     }
 }
