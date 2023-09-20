@@ -18,6 +18,7 @@ class StateResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'capital'=>$this->capital,
             'governor'=>$this->governor,
             'position'=>$this->position,
             'code'=>$this->code,

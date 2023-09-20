@@ -51,26 +51,15 @@ class StateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\V1\State\StoreStateRequest  $request
+     * @param StoreStateRequest $request
      * @return Response
      */
     public function store(StoreStateRequest $request)
     {
-        //
+        return $this->repository->create($request->all());
     }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param State $state
-     * @return Response
-     */
-    public function edit(State $state)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

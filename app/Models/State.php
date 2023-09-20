@@ -10,6 +10,14 @@ class State extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'name',
+        'capital',
+        'governor',
+        'position',
+        'code',
+        'country_id',
+    ];
 
     public function country(): BelongsTo
     {
