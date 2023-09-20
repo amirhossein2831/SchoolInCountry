@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\StateRepository;
 use App\Http\Requests\V1\State\StoreStateRequest;
 use App\Http\Requests\V1\State\UpdateStateRequest;
+use App\Http\Resources\V1\CountryResource;
 use App\Http\Resources\V1\StateResource;
 use App\Http\Service\V1\StateService;
 use App\Models\State;
@@ -30,11 +31,11 @@ class StateController extends Controller
      */
     public function index(Request $request)
     {
-        $state = $this->repository->index();
+        $state = $this->repository->getQuery();
 
         $state = $this->service->applyFilter($request, $state);
 
-        return StateResource::collection($state);
+        return $this->repository->getAll($state);
     }
 
     /**
@@ -45,7 +46,7 @@ class StateController extends Controller
      */
     public function show(State $state)
     {
-        return StateResource::make($state);
+        return $this->repository->getEntity($state);
     }
 
     /**

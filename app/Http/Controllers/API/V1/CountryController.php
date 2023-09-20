@@ -29,11 +29,11 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $country = $this->repository->index();
+        $country = $this->repository->getQuery();
 
         $country = $this->service->applyFilter($request, $country);
 
-        return CountryResource::collection($country);
+        return $this->repository->getAll($country);
     }
 
     /**
@@ -45,8 +45,10 @@ class CountryController extends Controller
      */
     public function show(Request $request,Country $country)
     {
-        $country = $this->service->singleRelation($country, $request->query('relation'), 'states');
-        return CountryResource::make($country);
+        $country = $this->service
+            ->singleRelation($country, $request->query('relation'), 'states');
+
+        return $this->repository->getEntity($country);
     }
 
     /**
