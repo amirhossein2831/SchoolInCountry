@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
+use App\Http\Requests\V1\Country\StoreCountryRequest;
+use App\Http\Requests\V1\Country\UpdateCountryRequest;
 use App\Models\Country;
 
 class CountryController extends Controller
@@ -32,7 +32,7 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCountryRequest  $request
+     * @param  \App\Http\Requests\V1\Country\StoreCountryRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCountryRequest $request)
@@ -65,7 +65,7 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCountryRequest  $request
+     * @param  \App\Http\Requests\V1\Country\UpdateCountryRequest  $request
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
