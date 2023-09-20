@@ -59,13 +59,13 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\V1\Country\UpdateCountryRequest  $request
+     * @param UpdateCountryRequest $request
      * @param Country $country
-     * @return Response
+     * @return JsonResponse
      */
     public function update(UpdateCountryRequest $request, Country $country)
     {
-        //
+        return $this->repository->update($country, $request->all());
     }
 
     /**
