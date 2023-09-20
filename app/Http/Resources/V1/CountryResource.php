@@ -21,6 +21,7 @@ class CountryResource extends JsonResource
             'capital'=>$this->capital,
             'language' => $this->language,
             'currencyName'=>$this->currency_name,
+            'states'=>  StateResource::collection($this->whenLoaded('states'))
         ];
     }
 }
