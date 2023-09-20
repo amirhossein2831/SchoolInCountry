@@ -64,13 +64,13 @@ class StateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\V1\State\UpdateStateRequest  $request
+     * @param UpdateStateRequest $request
      * @param State $state
-     * @return Response
+     * @return JsonResponse
      */
     public function update(UpdateStateRequest $request, State $state)
     {
-        //
+        return $this->repository->update($state, $request->all());
     }
 
     /**
