@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\CountryRepository;
 use App\Http\Requests\V1\Country\StoreCountryRequest;
 use App\Http\Requests\V1\Country\UpdateCountryRequest;
-use App\Http\Resources\V1\Country\CountryResource;
+use App\Http\Resources\V1\CountryResource;
 use App\Http\Service\V1\CountryService;
 use App\Models\Country;
 use Illuminate\Http\JsonResponse;

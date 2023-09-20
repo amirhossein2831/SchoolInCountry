@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\V1\ContinentRepository;
 use App\Http\Requests\V1\Continent\StoreContinentRequest;
 use App\Http\Requests\V1\Continent\UpdateContinentRequest;
-use App\Http\Resources\V1\Continent\ContinentResource;
+use App\Http\Resources\V1\ContinentResource;
 use App\Http\Service\V1\ContinentService;
 use App\Models\Continent;
 use Illuminate\Http\JsonResponse;
