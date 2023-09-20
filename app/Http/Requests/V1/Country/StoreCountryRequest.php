@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\V1\Country;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class StoreCountryRequest extends FormRequest
+class StoreCountryRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class StoreCountryRequest extends FormRequest
             'capital'=>'required|string',
             'language'=>'required|string',
             'currencyName'=>'required|string',
-            'continentId'=>'required|numeric'
+            'continentId'=>'required|numeric|between:1,7'
         ];
     }
 
