@@ -32,5 +32,9 @@ class Country extends Model
     protected static function boot(): void
     {
         parent::boot();
+
+        static::deleting(function ($country) {
+            $country->states()->delete();
+        });
     }
 }
