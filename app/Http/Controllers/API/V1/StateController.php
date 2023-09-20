@@ -36,6 +36,16 @@ class StateController extends Controller
         return StateResource::collection($state);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param State $state
+     * @return void
+     */
+    public function show(State $state)
+    {
+        return StateResource::make($state);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,21 +58,12 @@ class StateController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\State  $state
-     * @return Response
-     */
-    public function show(State $state)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\State  $state
+     * @param State $state
      * @return Response
      */
     public function edit(State $state)
@@ -74,7 +75,7 @@ class StateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\V1\State\UpdateStateRequest  $request
-     * @param  \App\Models\State  $state
+     * @param State $state
      * @return Response
      */
     public function update(UpdateStateRequest $request, State $state)
@@ -85,7 +86,7 @@ class StateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\State  $state
+     * @param State $state
      * @return Response
      */
     public function destroy(State $state)
