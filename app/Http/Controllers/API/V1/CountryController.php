@@ -47,12 +47,12 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\V1\Country\StoreCountryRequest  $request
+     * @param StoreCountryRequest $request
      * @return Response
      */
     public function store(StoreCountryRequest $request)
     {
-        //
+        return $this->repository->create($request->all());
     }
 
 
