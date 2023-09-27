@@ -3,6 +3,8 @@
 namespace App\Http\Repository;
 
 use App\Http\Interface\HasCrud;
+use DB;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -11,6 +13,7 @@ use Throwable;
 abstract class Repository implements HasCrud
 {
     protected abstract function getClass(): Model;
+
     protected abstract function getClassResource();
 
     public function getAll($builder)
@@ -25,7 +28,20 @@ abstract class Repository implements HasCrud
 
     public function create(array $data)
     {
-        return $this->getClass()::create($data);
+        try {
+            DB::beginTransaction();
+
+            if ($entity = $this->getClass()::create($data)) {
+                DB::commit();
+                $response = $entity;
+            } else {
+                DB::rollBack();
+                $response = response()->json(['danger' => 'fail to create']);
+        }
+        } catch (Exception | Throwable) {
+            $response = response()->json(['danger' => 'fail to create']);
+        }
+        return $response;
     }
 
     public function update(Model $entity, array $data): JsonResponse
